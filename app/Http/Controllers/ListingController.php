@@ -13,8 +13,6 @@ class ListingController extends Controller
      */
     public function index()
     {
-        
-
         $listings = Listing::all();
         $categories = Category::all();
 

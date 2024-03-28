@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('basket', function (Blueprint $table) {
+        Schema::create('listings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('listing_id');
-            $table->foreign('listing_id')->references('id')->on('listing');
+            $table->string('title');
+            $table->enum('condition', ['New & Unused', 'Used, Like New', 'Small Wear', 'Major Wear', 'Parts Only']);
+            $table->decimal('price');
+            $table->text('description');
+            $table->foreignId('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('basket');
+        Schema::dropIfExists('listings');
     }
 };

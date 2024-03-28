@@ -13,7 +13,7 @@ class CategoryController extends Controller
         $listings = Listing::all();
         $categories = Category::all();
 
-        return view('user.category.index',[
+        return view('category.index',[
             'listings' => $listings,
             'categories' => $categories
         ]);
@@ -22,7 +22,7 @@ class CategoryController extends Controller
     {
         $listings = Listing::all();
 
-        return view('user.category.create', [
+        return view('category.create', [
             'listings' => $listings,
         ]);
     }
@@ -50,7 +50,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->category_image = $request->category_image;
 
-        return to_route('user.category.index');
+        return to_route('category.index');
 
     }
 
@@ -62,7 +62,7 @@ class CategoryController extends Controller
         $categories = Category::FindOrFail($id);
         $listing = Listing::all();
 
-        return view('user.category.show', [
+        return view('category.show', [
             'listing' => $listing,
             'categories' => $categories,
         ]);
@@ -77,7 +77,7 @@ class CategoryController extends Controller
         $listing = Listing::all();
         // dd($selectedcategories);
 
-        return view('user.category.edit', [
+        return view('category.edit', [
             'listing' => $listing,
             'categories' => $categories,
         ]);
@@ -121,7 +121,7 @@ class CategoryController extends Controller
         $category->save();
 
         return redirect()
-                ->route('user.category.index')
+                ->route('category.index')
                 ->with('status', 'Updated category!');
     }
 
@@ -134,7 +134,7 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        return redirect()->route('user.category.index')->with('status', 'category deleted successfully');
+        return redirect()->route('category.index')->with('status', 'category deleted successfully');
     }
 
 }

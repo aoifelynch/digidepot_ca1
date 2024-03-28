@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('listing', function (Blueprint $table) {
-            $table->string('listing_image')->default('cover.png');
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('listing', function (Blueprint $table) {
-            $table->dropColumn('listing_image');
-        });
+        Schema::dropIfExists('categories');
     }
 };
