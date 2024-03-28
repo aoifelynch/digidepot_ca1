@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('images', function (Blueprint $table) {
-            $table->id();
-            $table->string('image')->default('cover.png');
-            $table->timestamps();
+        Schema::table('category', function (Blueprint $table) {
+            $table->string('category_image')->default('cover.png');
         });
     }
 
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('images');
+        Schema::table('category', function (Blueprint $table) {
+            $table->dropColumn('category_image');
+        });
     }
 };

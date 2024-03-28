@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('category', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('image_id');
-            $table->foreign('image_id')->references('id')->on('images');
             $table->timestamps();
         });
     }

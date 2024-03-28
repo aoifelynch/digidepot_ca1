@@ -66,16 +66,14 @@ class ListingController extends Controller
 
         $listing_image->storeAs('public/images', $filename);
 
-
-        $listing = listing::create([
-            'title' => $request->title,
-            'condition' => $request->condition,
-            'price' => $request->price,
-            'description' => $request->description,
-            'category_id' => $request->category_id,
-            'user_id' => $request->user_id,
-            'listing_image' => $filename
-        ]);
+        $listing = new Listing;
+        $listing->title = $request->title;
+        $listing->condition = $request->condition;
+        $listing->price = $request->price;
+        $listing->description = $request->description;
+        $listing->category_id = $request->category_id;
+        $listing->user_id = $request->user_id;
+        $listing->listing_image = $request->listing_image;
 
         return to_route('user.listing.index');
 
@@ -118,7 +116,7 @@ class ListingController extends Controller
     public function update(Request $request, string $id)
     {
                 // dd($request->title);
-        $listing = listing::findOrFail($id);
+        $listing = Listing::findOrFail($id);
         //validation rules
         $rules = [
             'title' => 'required|string|min:2|max:150', //Checks that the title isnt the same as another title
@@ -169,7 +167,7 @@ class ListingController extends Controller
      */
     public function destroy(string $id)
     {
-        $listing = listing::findOrFail($id);
+        $listing = Listing::findOrFail($id);
 
         $listing->delete();
 
