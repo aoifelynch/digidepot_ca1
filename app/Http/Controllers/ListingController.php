@@ -1,10 +1,8 @@
 <?php
-namespace App\Http\Controllers\user;
-
-use Illuminate\Http\Request;
+namespace App\Http\Controllers;
 use App\Models\Listing;
 use App\Models\Category;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class ListingController extends Controller
 {
@@ -16,7 +14,7 @@ class ListingController extends Controller
         $listings = Listing::all();
         $categories = Category::all();
 
-        return view('user.listing.index',[
+        return view('listing.index',[
             'listings' => $listings,
             'categories' => $categories
         ]);
@@ -29,7 +27,7 @@ class ListingController extends Controller
     {
         $categories = Category::all();
 
-        return view('user.listing.create', [
+        return view('listing.create', [
             'categories' => $categories,
         ]);
     }
@@ -73,7 +71,7 @@ class ListingController extends Controller
         $listing->user_id = $request->user_id;
         $listing->listing_image = $request->listing_image;
 
-        return to_route('user.listing.index');
+        return to_route('listing.index');
 
     }
 
@@ -86,7 +84,7 @@ class ListingController extends Controller
 
         $categories = Category::all();
 
-        return view('user.listing.show', [
+        return view('listing.show', [
             'listing' => $listing,
             'categories' => $categories,
         ]);
@@ -102,7 +100,7 @@ class ListingController extends Controller
 
         // dd($selectedcategories);
 
-        return view('user.listing.edit', [
+        return view('listing.edit', [
             'listing' => $listing,
             'categories' => $categories,
         ]);
@@ -156,7 +154,7 @@ class ListingController extends Controller
         $listing->save();
 
         return redirect()
-                ->route('user.listing.index')
+                ->route('listing.index')
                 ->with('status', 'Updated listing!');
     }
 
@@ -169,6 +167,6 @@ class ListingController extends Controller
 
         $listing->delete();
 
-        return redirect()->route('user.listing.index')->with('status', 'listing deleted successfully');
+        return redirect()->route('listing.index')->with('status', 'listing deleted successfully');
     }
 }

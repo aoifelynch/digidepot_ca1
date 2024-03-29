@@ -12,7 +12,7 @@
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         
                         
-                        <p>You're a user!</p> 
+                        <p>Listing Index Page!</p> 
                         
                     </div>
                 </div>

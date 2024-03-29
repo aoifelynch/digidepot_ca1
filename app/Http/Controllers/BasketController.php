@@ -1,13 +1,9 @@
 <?php
-namespace App\Http\Controllers\user;
-
-use Illuminate\Http\Request;
+namespace App\Http\Controllers;
 use App\Models\Listing;
-use App\Models\Category;
 use App\Models\Basket;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
-//THIS HAS NOT BEEN UPDATED IGNORE
 
 class BasketController extends Controller
 {
@@ -17,85 +13,12 @@ class BasketController extends Controller
     public function index()
     {
         
-
+        $baskets = Basket::all();
         $listings = Listing::all();
-        $categories = Category::all();
 
-        return view('user.listing.index',[
+        return view('basket.show',[
             'listings' => $listings,
-            'categories' => $categories
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $categories = Category::all();
-
-        return view('user.listing.create', [
-            'categories' => $categories,
-        ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        
-
-        $rules = [
-            'title' => 'required|string|min:2|max:150', //Checks that the title isnt the same as another title
-            'condition' => 'required|in:New & Unused, Used - Like New, Small Wear, Major Wear, Parts Only',
-            'price' => 'required|decimal',
-            'category_id' => 'required|exists:category,id',
-            'description' => 'required|string|min:5|max:1000',
-            'animation_studio' => 'required|string',
-            'user_id' => 'required|exists:users,id',
-            'listing_image' => 'required|file|image'
-        ];
-
-
-        $request->validate($rules);
-        // dd($request);
-
-
-        $listing_image = $request->file('listing_image');
-        $extension = $listing_image->getClientOriginalExtension();
-        $filename = date('y-m-d-His') . '_' .  str_replace(' ', '_', $request->title) . '.' . $extension;
-
-
-        $listing_image->storeAs('public/images', $filename);
-
-
-        $listing = listing::create([
-            'title' => $request->title,
-            'condition' => $request->condition,
-            'price' => $request->price,
-            'description' => $request->description,
-            'category_id' => $request->category_id,
-            'user_id' => $request->user_id,
-            'listing_image' => $filename
-        ]);
-
-        return to_route('user.listing.index');
-
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $listing = Listing::FindOrFail($id);
-
-        $categories = Category::all();
-
-        return view('user.listing.show', [
-            'listing' => $listing,
-            'categories' => $categories,
+            'baskets' => $baskets
         ]);
     }
 
@@ -105,13 +28,13 @@ class BasketController extends Controller
     public function edit(string $id)
     {
         $listing = Listing::FindOrFail($id);
-        $categories = Category::all();
+        $baskets = Basket::all();
 
         // dd($selectedcategories);
 
-        return view('user.listing.edit', [
+        return view('basket.show', [
             'listing' => $listing,
-            'categories' => $categories,
+            'baskets' => $baskets,
         ]);
     }
 
@@ -121,61 +44,33 @@ class BasketController extends Controller
     public function update(Request $request, string $id)
     {
                 // dd($request->title);
-        $listing = listing::findOrFail($id);
+        $basket = Basket::findOrFail($id);
         //validation rules
         $rules = [
-            'title' => 'required|string|min:2|max:150', //Checks that the title isnt the same as another title
-            'condition' => 'required|in:New & Unused, Used - Like New, Small Wear, Major Wear, Parts Only',
-            'price' => 'required|decimal',
-            'category_id' => 'required|exists:category,id',
-            'description' => 'required|string|min:5|max:1000',
-            'animation_studio' => 'required|string',
+            'listing_id' => 'required|exists:listing,id',
             'user_id' => 'required|exists:users,id',
-            'listing_image' => 'required|file|image'
 
         ];
         ////////
         $request->validate($rules);
 
+        $basket->listing_id = $request->listing_id;
+        $basket->user_id = $request->user_id;
+        $basket->save();
 
-        if($request->hasFile('listing_image')){
-            $listing_image = $request->file('listing_image');
-            $extension = $listing_image->getClientOriginalExtension();
-            $filename = date('y-m-d-His') . '_' .  str_replace(' ', '_', $request->title) . '.' . $extension;
-
-
-            $listing_image->storeAs('public/images', $filename);
-            $listing->listing_image = $filename;
+        return redirect()
+                ->route('basket.show')
+                ->with('status', 'Updated listing!');
 
         }
 
-        
-
-        // dd($request);
-
-
-        $listing->title = $request->title;
-        $listing->condition = $request->condition;
-        $listing->price = $request->price;
-        $listing->description = $request->description;
-        $listing->category_id = $request->category_id;
-        $listing->user_id = $request->user_id;
-        $listing->save();
-
-        return redirect()
-                ->route('user.listing.index')
-                ->with('status', 'Updated listing!');
+        public function destroy(string $id)
+        {
+            $basket = Basket::findOrFail($id);
+    
+            $basket->delete();
+    
+            return redirect()->route('basket.show')->with('status', 'listing deleted successfully');
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        $listing = listing::findOrFail($id);
-
-        $listing->delete();
-
-        return redirect()->route('user.listing.index')->with('status', 'listing deleted successfully');
-    }
-}
