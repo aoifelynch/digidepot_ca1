@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Listing;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -9,22 +8,15 @@ class CategoryController extends Controller
 {
     public function index()
     {
-    
-        $listings = Listing::all();
         $categories = Category::all();
 
         return view('category.index',[
-            'listings' => $listings,
             'categories' => $categories
         ]);
     }
     public function create()
     {
-        $listings = Listing::all();
-
-        return view('category.create', [
-            'listings' => $listings,
-        ]);
+        return view('category.create',);
     }
     public function store(Request $request)
     {
@@ -60,10 +52,8 @@ class CategoryController extends Controller
     public function show(string $id)
     {
         $categories = Category::FindOrFail($id);
-        $listing = Listing::all();
 
         return view('category.show', [
-            'listing' => $listing,
             'categories' => $categories,
         ]);
     }
@@ -74,11 +64,9 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         $categories = Category::FindOrFail($id);
-        $listing = Listing::all();
         // dd($selectedcategories);
 
         return view('category.edit', [
-            'listing' => $listing,
             'categories' => $categories,
         ]);
     }
