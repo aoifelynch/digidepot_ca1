@@ -1,40 +1,65 @@
 <x-app-layout>
-    <x-slot name="header">
-    <div class="flex items-center justify-between">
-    <h2 class="font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight">
-        {{ $categories->name }}
-    </h2>
-    <div class="ml-auto">
-        <a href="{{ url()->previous() }}" class="bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">Back</a>
-    </div>
-</div>
-
-    </x-slot>
-
-    <div class="bg-gray-100 dark:bg-gray-800 py-8">
-        <div class="max-w-7xl flex container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-                @forelse($categories->listings as $listing)
-                <div class="bg-white rounded-lg shadow-lg p-8">
-                    <a href="{{ route('listing.show', $listing->id) }}">
-                        <div class="relative overflow-hidden">
-                            <img class="object-cover w-full h-full rounded" src="{{ asset("storage/images/" . $listing->listing_image) }}" alt="{{ $listing->name }}" />
-                            <h3 class="text-xl font-bold text-gray-900 mt-4">{{ $listing->title }}</h3>
-                    </a>
-                    <p class="text-green-500 text-sm mt-2">{{ $listing->condition }}</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-gray-900 font-bold text-lg">€{{ $listing->price }}</span>
-                        <button class="bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800">Add to Cart</button>
-                    </div>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-[url('./images/scatterGadgets.jpg')] bg-cover bg-no-repeat dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="text-center py-20 text-white dark:text-white">
+                    <b>
+                        {{ __("Welcome to DigiDepot. The leading buy/sell marketplace in the IT industry.") }}
+                    </b>
+                    <br>
+                    {{ __("It is our goal to help decrease the amount of E-Waste on the planet by creating a secure
+                    platform that allows users to resell and repurpose their electronics.") }}
                 </div>
+
             </div>
-            @empty
-            <h4 class="text-center">No Listings found!</h4>
-            @endforelse
         </div>
 
     </div>
-    <br>
+    <div class="py-1">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="text-lg text-left text-black dark:text-black">
+                <b>{{ __("Search by Category") }}</b>
+                <p>this will eventually get linked to the actual categories</p>
+            </div>
+            <!--  -->
+        </div>
+
+    </div>
+    <div class="py-1">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="text-lg text-left text-black dark:text-black">
+                <b>{{ __("Why Sell With Us?") }}</b>
+                <p class="text-base">We do our best to ensure every user has the best possible selling/purchasing experience on our platform. See for yourself!</p>
+            </div>
+            <div class="flex justify-between mx-5 my-5">
+                <div class="">
+                    <a href="#" class="block max-w-sm p-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                        <img src="{{ asset("storage/images/Trustpilot.png") }}" />
+                    </a>
+                </div>
+                <div class="">
+                    <a href="#" class="block max-w-sm p-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                        <img src="{{ asset("storage/images/Trustpilot.png") }}" />
+                    </a>
+                </div>
+                <div class="">
+                    <a href="#" class="block max-w-sm p-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                        <img src="{{ asset("storage/images/Trustpilot.png") }}" />
+                    </a>
+                </div>
+                <div class="">
+                    <a href="#" class="block max-w-sm p-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                        <img src="{{ asset("storage/images/Trustpilot.png") }}" />
+                    </a>
+                </div>
+            </div>
+            <div class="mb-10 mx-auto flex justify-center items-center">
+                <img src="{{ asset("storage/images/Trustpilot2.png") }}" />
+            </div>
+        </div>
+    </div>
+
+
     <footer class="bg-white dark:bg-gray-900">
         <div class="mx-auto w-full max-w-screen-lg ">
             <div class="text-center grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">

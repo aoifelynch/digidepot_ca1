@@ -41,11 +41,10 @@ class ListingController extends Controller
 
         $rules = [
             'title' => 'required|string|min:2|max:150', //Checks that the title isnt the same as another title
-            'condition' => 'required|in:New & Unused, Used - Like New, Small Wear, Major Wear, Parts Only',
-            'price' => 'required|decimal',
-            'category_id' => 'required|exists:category,id',
+            'condition' => 'required|in:New & Unused,"Used, Like New",Small Wear,Major Wear,Parts Only',
+            'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+            'category_id' => 'required|exists:categories,id',
             'description' => 'required|string|min:5|max:1000',
-            'animation_studio' => 'required|string',
             'user_id' => 'required|exists:users,id',
             'listing_image' => 'required|file|image'
         ];
@@ -81,13 +80,17 @@ class ListingController extends Controller
     public function show(string $id)
     {
         $listing = Listing::FindOrFail($id);
-
+        $listing_all = Listing::paginate(4);
         $categories = Category::all();
 
         return view('listing.show', [
             'listing' => $listing,
             'categories' => $categories,
+            'listing_all' => $listing_all
         ]);
+
+        
+        
     }
 
     /**
@@ -116,11 +119,10 @@ class ListingController extends Controller
         //validation rules
         $rules = [
             'title' => 'required|string|min:2|max:150', //Checks that the title isnt the same as another title
-            'condition' => 'required|in:New & Unused, Used - Like New, Small Wear, Major Wear, Parts Only',
-            'price' => 'required|decimal',
-            'category_id' => 'required|exists:category,id',
+            'condition' => 'required|in:New & Unused,"Used, Like New",Small Wear,Major Wear,Parts Only',
+            'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+            'category_id' => 'required|exists:categories,id',
             'description' => 'required|string|min:5|max:1000',
-            'animation_studio' => 'required|string',
             'user_id' => 'required|exists:users,id',
             'listing_image' => 'required|file|image'
 

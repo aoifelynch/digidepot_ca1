@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Category;
+use App\Models\Listing;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -52,9 +53,11 @@ class CategoryController extends Controller
     public function show(string $id)
     {
         $categories = Category::FindOrFail($id);
+        $listings = Listing::all();
 
         return view('category.show', [
             'categories' => $categories,
+            'listings' => $listings
         ]);
     }
 
