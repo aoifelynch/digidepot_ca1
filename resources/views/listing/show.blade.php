@@ -31,16 +31,53 @@
                     {{ $listing->description }} Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
                 </p>
 
+                <div id="notification" class="notification hidden bg-white border border-gray-300 shadow-lg rounded-lg py-2 px-4 fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50">
+                    Item was added to cart
+                </div>
+
                 @if (Auth::check() && $listing->user_id !== Auth::id())
                 <div class="w-11/12 px-2 mt-3">
                     <form id="addToCartForm" action="{{ route('basket.add') }}" method="POST">
-                    @method('POST')
                         @csrf
                         <input type="hidden" name="listing_id" value="{{ $listing->id }}">
-                        <button type="submit" class="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">Add to Cart</button>
+                        <button type="submit" onclick="displayNotification()" class="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">Add to Cart</button>
                     </form>
                 </div>
                 @endif
+
+             
+                <script>
+    // Wait for the DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the notification element
+        var notification = document.getElementById('notification');
+
+        // Check if the notification should be displayed
+        var shouldDisplayNotification = localStorage.getItem('displayNotification');
+
+        if (shouldDisplayNotification) {
+            // Show the notification
+            notification.classList.remove('hidden');
+            notification.classList.add('block');
+
+            // Remove the flag from local storage after displaying the notification
+            localStorage.removeItem('displayNotification');
+
+            // Automatically hide the notification after 3 seconds
+            setTimeout(function() {
+                notification.classList.add('hidden');
+                notification.classList.remove('block');
+            }, 3000); // 3000 milliseconds = 3 seconds
+        }
+    });
+
+    // Function to display notification
+    function displayNotification() {
+        // Set the flag in local storage to indicate that the notification should be displayed
+        localStorage.setItem('displayNotification', true);
+    }
+</script>
+               
 
                 @if (Auth::check() && $listing->user_id === Auth::id())
                 <div class="flex justify-between w-11/12 px-2">
@@ -80,7 +117,7 @@
                         <div class="flex items-center justify-between">
                             <span class="text-gray-900 font-bold text-lg">€{{ $listing->price }}</span>
                             <a href="{{ route('listing.show', $listing->id) }}">
-                            <button class="bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800">See More</button>
+                                <button class="bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800">See More</button>
                             </a>
 
                         </div>
