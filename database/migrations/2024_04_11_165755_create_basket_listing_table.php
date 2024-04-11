@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('baskets', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+        Schema::create('basket_listing', function (Blueprint $table) {
+            $table->foreignId('listing_id');
+            $table->foreign('listing_id')->references('id')->on('listings');
+            $table->foreignId('basket_id');
+            $table->foreign('basket_id')->references('id')->on('baskets');
             $table->timestamps();
         });
+        
     }
 
     /**
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('baskets');
+        Schema::dropIfExists('listings_baskets');
     }
 };

@@ -22,5 +22,10 @@ class Listing extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
+
+    public function baskets()
+    {
+        return $this->belongsToMany(Basket::class);
+    }
 }
 

@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\Models\Listing;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ListingController extends Controller
@@ -61,16 +62,17 @@ class ListingController extends Controller
 
         $listing_image->storeAs('public/images', $filename);
 
-        $listing = new Listing;
-        $listing->title = $request->title;
-        $listing->condition = $request->condition;
-        $listing->price = $request->price;
-        $listing->description = $request->description;
-        $listing->category_id = $request->category_id;
-        $listing->user_id = $request->user_id;
-        $listing->listing_image = $request->listing_image;
+        $listing = Listing::create([
+            'title' => $request->title,
+            'condition' => $request->condition,
+            'price' => $request->price,
+            'category_id' => $request->category_id,
+            'description' => $request->description,
+            'user_id' => $request->user_id,
+            'listing_image' => $filename
+        ]);
 
-        return to_route('listing.index');
+        return redirect()->route('listing.index');
 
     }
 
@@ -98,11 +100,16 @@ class ListingController extends Controller
      */
     public function edit(string $id)
     {
-        $listing = Listing::FindOrFail($id);
+        $listing = Listing::findOrFail($id);
+    
+        // Check if the authenticated user is the owner of the listing
+        if ($listing->user_id !== Auth::id()) {
+            // If not, return an unauthorized response or redirect to a different page
+            return redirect()->route('listing.index')->with('error', 'You are not authorized to edit this listing.');
+        }
+    
         $categories = Category::all();
-
-        // dd($selectedcategories);
-
+    
         return view('listing.edit', [
             'listing' => $listing,
             'categories' => $categories,
@@ -114,7 +121,7 @@ class ListingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-                // dd($request->title);
+
         $listing = Listing::findOrFail($id);
         //validation rules
         $rules = [
@@ -127,7 +134,7 @@ class ListingController extends Controller
             'listing_image' => 'required|file|image'
 
         ];
-        ////////
+      
         $request->validate($rules);
 
 
@@ -141,11 +148,6 @@ class ListingController extends Controller
             $listing->listing_image = $filename;
 
         }
-
-        
-
-        // dd($request);
-
 
         $listing->title = $request->title;
         $listing->condition = $request->condition;
@@ -166,9 +168,15 @@ class ListingController extends Controller
     public function destroy(string $id)
     {
         $listing = Listing::findOrFail($id);
-
+    
+        // Check if the authenticated user is the owner of the listing
+        if ($listing->user_id !== Auth::id()) {
+            // If not, return an unauthorized response or redirect to a different page
+            return redirect()->route('listing.index')->with('error', 'You are not authorized to delete this listing.');
+        }
+    
         $listing->delete();
-
-        return redirect()->route('listing.index')->with('status', 'listing deleted successfully');
+    
+        return redirect()->route('listing.index')->with('status', 'Listing deleted successfully');
     }
 }
