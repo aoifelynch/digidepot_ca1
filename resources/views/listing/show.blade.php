@@ -45,39 +45,37 @@
                 </div>
                 @endif
 
-             
+
                 <script>
-    // Wait for the DOM to be fully loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get the notification element
-        var notification = document.getElementById('notification');
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var notification = document.getElementById('notification');
 
-        // Check if the notification should be displayed
-        var shouldDisplayNotification = localStorage.getItem('displayNotification');
+                        // Check if the notification should be displayed
+                        var shouldDisplayNotification = localStorage.getItem('displayNotification');
 
-        if (shouldDisplayNotification) {
-            // Show the notification
-            notification.classList.remove('hidden');
-            notification.classList.add('block');
+                        if (shouldDisplayNotification) {
+                            // Show the notification
+                            notification.classList.remove('hidden');
+                            notification.classList.add('block');
 
-            // Remove the flag from local storage after displaying the notification
-            localStorage.removeItem('displayNotification');
+                            // Remove the flag from local storage after displaying the notification
+                            localStorage.removeItem('displayNotification');
 
-            // Automatically hide the notification after 3 seconds
-            setTimeout(function() {
-                notification.classList.add('hidden');
-                notification.classList.remove('block');
-            }, 3000); // 3000 milliseconds = 3 seconds
-        }
-    });
+                            // Automatically hide the notification after 3 seconds
+                            setTimeout(function() {
+                                notification.classList.add('hidden');
+                                notification.classList.remove('block');
+                            }, 3000); // 3000 milliseconds = 3 seconds
+                        }
+                    });
 
-    // Function to display notification
-    function displayNotification() {
-        // Set the flag in local storage to indicate that the notification should be displayed
-        localStorage.setItem('displayNotification', true);
-    }
-</script>
-               
+                    // Function to display notification
+                    function displayNotification() {
+                        // Set the flag in local storage to indicate that the notification should be displayed
+                        localStorage.setItem('displayNotification', true);
+                    }
+                </script>
+
 
                 @if (Auth::check() && $listing->user_id === Auth::id())
                 <div class="flex justify-between w-11/12 px-2">
