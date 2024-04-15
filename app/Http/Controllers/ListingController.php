@@ -7,9 +7,18 @@ use Illuminate\Http\Request;
 
 class ListingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function dashboard(Request $request)
+{
+    $query = $request->input('query');
+
+    $listings = Listing::where('name', 'like', '%' . $query . '%')->paginate(50);
+    $categories = Category::all();
+
+    return view('dashboard', [
+        'listings' => $listings,
+        'categories' => $categories,
+    ]);
+}
     public function index()
     {
         $listings = Listing::all();
@@ -62,15 +71,14 @@ class ListingController extends Controller
 
         $listing_image->storeAs('public/images', $filename);
 
-        $listing = Listing::create([
-            'title' => $request->title,
-            'condition' => $request->condition,
-            'price' => $request->price,
-            'category_id' => $request->category_id,
-            'description' => $request->description,
-            'user_id' => $request->user_id,
-            'listing_image' => $filename
-        ]);
+        $listing = new Listing;
+        $listing->title = $request->title;
+        $listing->condition = $request->condition;
+        $listing->price = $request->price;
+        $listing->description = $request->description;
+        $listing->category_id = $request->category_id;
+        $listing->user_id = $request->user_id;
+        $listing->save();
 
         return redirect()->route('listing.index');
 
@@ -104,7 +112,7 @@ class ListingController extends Controller
     
         // Check if the authenticated user is the owner of the listing
         if ($listing->user_id !== Auth::id()) {
-            // If not, return an unauthorized response or redirect to a different page
+           
             return redirect()->route('listing.index')->with('error', 'You are not authorized to edit this listing.');
         }
     

@@ -5,16 +5,14 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ListingController;
-use App\Http\Controllers\HomeController;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
-Route::get('/dashboard', function () {
+Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Routes that require authentication
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [ListingController::class, 'dashboard'])->name('dashboard');
     Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
     Route::resource('/user/category', CategoryController::class);
     Route::resource('/user/listing', ListingController::class);

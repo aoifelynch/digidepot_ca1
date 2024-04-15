@@ -1,12 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Models\Listing;
-use Illuminate\Http\Request;
+
 
 class CategoryController extends Controller
 {
+    public function dashboard()
+    {
+        $categories = Category::all();
+        $listings = Listing::all();
+
+        return view('dashboard', [
+            'categories' => $categories,
+            'listings' => $listings
+        ]);
+    }
+
     public function index()
     {
         $categories = Category::all();
@@ -15,10 +28,12 @@ class CategoryController extends Controller
             'categories' => $categories
         ]);
     }
+
     public function create()
     {
         return view('category.create',);
     }
+    
     public function store(Request $request)
     {
         
