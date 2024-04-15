@@ -11,6 +11,7 @@ class CategoryController extends Controller
 {
     public function dashboard()
     {
+        dd('Reached');
         $categories = Category::all();
         $listings = Listing::all();
 

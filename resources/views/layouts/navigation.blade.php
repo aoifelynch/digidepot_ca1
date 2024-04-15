@@ -13,10 +13,10 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('category.index')" :active="request()->routeIs('category.index')">
-                        {{ __('Shop') }}
+                        {{ __('Buy') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('listing.index')" :active="request()->routeIs('listing.index')">
-                        {{ __('Listings') }}
+                    <x-nav-link :href="route('listing.create')" :active="request()->routeIs('listing.create')">
+                        {{ __('Sell') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div>My Account</div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

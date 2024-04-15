@@ -13,6 +13,7 @@ Route::get('/', function () {
 // Routes that require authentication
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [ListingController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [CategoryController::class, 'dashboard'])->name('dashboard');
     Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
     Route::resource('/user/category', CategoryController::class);
     Route::resource('/user/listing', ListingController::class);

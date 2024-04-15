@@ -1,5 +1,11 @@
 @extends('layouts.myApp')
-
+@section('header')
+<div class="flex items-center justify-center">
+    <h2 class="font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight">
+        Nice to see you, {{ Auth::user()->name }}
+    </h2>
+</div>
+@endsection
 @section('content')
 
     <div class="px-12 mt-5 mb-5">
@@ -38,7 +44,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="text-lg text-left text-black dark:text-black">
                 <b>{{ __("Search by Category") }}</b>
-                <p>this will eventually get linked to the actual categories</p>
+                <p class="text-base">this will eventually get linked to the actual categories</p>
             </div>
            
         </div>
@@ -80,7 +86,7 @@
 
 
     <footer class="bg-white dark:bg-gray-900">
-        <div class="mx-auto w-full max-w-screen-lg ">
+        <div class="mx-auto max-w-7xl ">
             <div class="text-center grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">
                 <div>
                     <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Company</h2>

@@ -11,7 +11,7 @@ class HomeController extends Controller
     {
         $categories = Category::all();
 
-        return view('home', [
+        return view('dashboard', [
             'categories' => $categories,
         ]);
         
