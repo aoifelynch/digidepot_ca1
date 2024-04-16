@@ -12,26 +12,32 @@
     </x-slot>
 
     <div class="bg-gray-100 dark:bg-gray-800 py-8">
+    
         <div class="max-w-7xl flex container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 @forelse($categories->listings as $listing)
-                <div class="bg-white rounded-lg shadow-lg p-8">
-                    <a href="{{ route('listing.show', $listing->id) }}">
-                        <div class="relative overflow-hidden">
-                            <img class="object-cover w-full h-full rounded" src="{{ asset("storage/images/" . $listing->listing_image) }}" alt="{{ $listing->name }}" />
+                    <div class="bg-white rounded-lg shadow-lg p-8">
+                        <a href="{{ route('listing.show', $listing->id) }}">
+                            <div class="relative overflow-hidden h-48"> <!-- Set a fixed height for image container -->
+                                <img class="object-cover w-full h-full rounded" src="{{ asset("storage/images/" . $listing->listing_image) }}" alt="{{ $listing->name }}" />
+                            </div>
                             <h3 class="text-xl font-bold text-gray-900 mt-4">{{ $listing->title }}</h3>
-                    </a>
-                    <p class="text-green-500 text-sm mt-2">{{ $listing->condition }}</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-gray-900 font-bold text-lg">€{{ $listing->price }}</span>
-                        <button class="bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800">Add to Cart</button>
+                        </a>
+                        <p class="text-green-500 text-sm mt-2">{{ $listing->condition }}</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-900 font-bold text-lg">€{{ $listing->price }}</span>
+                            <a href="{{ route('listing.show', $listing->id) }}">
+                                <button class="bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800">See More</button>
+                            </a>
+                        </div>
                     </div>
+
+
+                    @empty
+                    <h4 class="text-center">No Listings found!</h4>
+                    @endforelse
                 </div>
             </div>
-            @empty
-            <h4 class="text-center">No Listings found!</h4>
-            @endforelse
-        </div>
 
     </div>
     <br>
