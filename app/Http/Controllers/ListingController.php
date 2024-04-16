@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class ListingController extends Controller
 {
+
     public function dashboard(Request $request)
 {
     $query = $request->input('query');

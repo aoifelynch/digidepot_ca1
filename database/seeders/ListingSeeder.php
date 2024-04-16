@@ -37,7 +37,7 @@ class ListingSeeder extends Seeder
         $listing3->title = "iPhone 14";
         $listing3->condition = "Parts Only";
         $listing3->price = 100.00;
-        $listing3->category_id = 5;
+        $listing3->category_id = 1;
         $listing3->description = "iPhone 14 Purple. Parts Only, doesn't turn on";
         $listing3->user_id = 1;
         $listing3->listing_image = "iphone.jpg";
@@ -52,5 +52,55 @@ class ListingSeeder extends Seeder
         $listing4->user_id = 1;
         $listing4->listing_image = "ipad.jpg";
         $listing4->save();
+
+        $listing5 = new Listing;
+        $listing5->title = "Samsung Galaxy S24 Ultra";
+        $listing5->condition = "Used, Like New";
+        $listing5->price = 1200.00;
+        $listing5->category_id = 1;
+        $listing5->description = "Mint Condition Phone. 500gb";
+        $listing5->user_id = 2;
+        $listing5->listing_image = "samsung.jpg";
+        $listing5->save();
+
+        $listing6 = new Listing;
+        $listing6->title = "Intel Core i5-10400F Desktop Processor";
+        $listing6->condition = "Major Wear";
+        $listing6->price = 114.00;
+        $listing6->category_id = 2;
+        $listing6->description = "CPU";
+        $listing6->user_id = 2;
+        $listing6->listing_image = "cpu.webp";
+        $listing6->save();
+
+        $listing7 = new Listing;
+        $listing7->title = "Microsoft Surface Go 3";
+        $listing7->condition = "Small Wear";
+        $listing7->price = 114.00;
+        $listing7->category_id = 4;
+        $listing7->description = "Laptop one year old";
+        $listing7->user_id = 2;
+        $listing7->listing_image = "surface.webp";
+        $listing7->save();
+
+        $listing8 = new Listing;
+        $listing8->title = "Macbook Pro";
+        $listing8->condition = "Parts Only";
+        $listing8->price = 800.00;
+        $listing8->category_id = 4;
+        $listing8->description = "Laptop one year old";
+        $listing8->user_id = 2;
+        $listing8->listing_image = "macbook.jpg";
+        $listing8->save();
+
+        $listing9 = new Listing;
+        $listing9->title = "Havit Mechanical Keyboard";
+        $listing9->condition = "Used, Like New";
+        $listing9->price = 120.00;
+        $listing9->category_id = 5;
+        $listing9->description = "Wired compact keyboard";
+        $listing9->user_id = 2;
+        $listing9->listing_image = "keyboard.webp";
+        $listing9->save();
     }
 }
